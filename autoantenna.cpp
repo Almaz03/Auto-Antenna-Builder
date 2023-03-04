@@ -110,6 +110,35 @@ int main() {
     cout << "If you want add ATC position which is exclude in initial data " << endl <<
          "add name of ATC position to Output->atc.txt file, save file and restart tool\n" << endl;
 
+
+    cout << "Enter password:" << endl;
+    string password, correct_password = "mycontrols";
+    bool pas_flag = true;
+    getline(cin, password);
+    password = enters(password);
+    if (password.size()!=correct_password.size()){
+        cout << "Password is wrong" << endl;
+        cout << "Press any key to exit" << endl;
+        system("pause");
+        exit(0);
+    }
+    for (int i = 0; i<password.size();i++){
+        if (i==0) pas_flag = true;
+        if (password[i]==correct_password[i] and pas_flag){
+            pas_flag = true;
+        }
+        else pas_flag = false;
+    }
+    if (pas_flag) {
+        cout<<"Password is correct\n"<<endl;
+    }
+    else {
+        cout << "Password is wrong" << endl;
+        cout << "Press any key to exit" << endl;
+        system("pause");
+        exit(0);
+    }
+
     cout << "Did you updated AIRAC cycle? Press 1 - is YES, 0 - is NO (If this is your first start of tool - press 1):"
          << endl;
     bool airac;
