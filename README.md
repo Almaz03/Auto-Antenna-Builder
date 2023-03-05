@@ -2,7 +2,7 @@ Automatic creating antenna to data tool
 
 Built by VID: 612939
 
-Version: 1.3
+Version: 1.3a
 
 Last update: 05/03/2023
 
