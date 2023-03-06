@@ -2,9 +2,9 @@ Automatic creating antenna to data tool
 
 Built by VID: 612939
 
-Version: 1.3.1a
+Version: 1.3.2a
 
-Last update: 05/03/2023
+Last update: 06/03/2023
 
 This tool not creating antennas for Control position
 
