@@ -13,14 +13,15 @@ short Settings::get_up_elevation() const {
 }
 
 void Settings::set_FIR(std::string FIR) {
-    FIR = enters(FIR); // remove any leading/trailing white spaces
+    FIR = enters(FIR);
+    FIR = fromlowtouppercase(FIR);// remove any leading/trailing white spaces
     this->FIR = FIR;
     this->FIR += "_CTR"; // add "_CTR" to the end of FIR
 }
 
 void Settings::set_country(std::string country) {
     country = enters(country); // remove any leading/trailing white spaces
-    country = firsttouppercase(country); // capitalize first letter of each word
+    country = fromlowtouppercase(country); // capitalize first letter of each word
     this->country = country;
 }
 
@@ -60,11 +61,20 @@ void Settings::set_ppm(short del, short gnd, short twr, short app, short atis) {
 //check_ppm();
 }
 
-std::string Settings::get_FIR() const{
+void Settings::set_is_CTR(bool del, bool gnd, bool twr, bool app, bool atis) {
+    atc_data.del.is_CTR = del;
+    atc_data.gnd.is_CTR = gnd;
+    atc_data.twr.is_CTR = twr;
+    atc_data.app.is_CTR = app;
+    atc_data.atis.is_CTR = atis;
+//check_ppm();
+}
+
+std::string Settings::get_FIR() const {
     return FIR;
 }
 
-std::string Settings::get_country() const{
+std::string Settings::get_country() const {
     return country;
 }
 
@@ -88,13 +98,25 @@ int Settings::get_app_power() const { return atc_data.app.power; }
 
 int Settings::get_atis_power() const { return atc_data.atis.power; }
 
+bool Settings::get_del_is_CTR() const { return atc_data.del.is_CTR; }
+
+bool Settings::get_gnd_is_CTR() const { return atc_data.gnd.is_CTR; }
+
+bool Settings::get_twr_is_CTR() const { return atc_data.twr.is_CTR; }
+
+bool Settings::get_app_is_CTR() const { return atc_data.app.is_CTR; }
+
+bool Settings::get_atis_is_CTR() const { return atc_data.atis.is_CTR; }
+
 void ATC::set_ICAO(std::string ICAO) {
-    ICAO = enters(ICAO); // remove any leading/trailing white spaces
+    ICAO = enters(ICAO);
+    ICAO = fromlowtouppercase(ICAO);// remove any leading/trailing white spaces
     this->ICAO = ICAO;
 }
 
 void ATC::set_airport_name(std::string airport_name) {
-    airport_name = enters(airport_name); // remove any leading/trailing white spaces
+    airport_name = enters(airport_name);
+    airport_name = firsttouppercase(airport_name);// remove any leading/trailing white spaces
     this->airport_name = airport_name;
 }
 
@@ -111,11 +133,11 @@ void ATC::add_atc_position_name(const std::string &name) {
     atc_position_name.push_back(name);
 }
 
-std::string ATC::get_ICAO() const{
+std::string ATC::get_ICAO() const {
     return ICAO;
 }
 
-std::string ATC::get_airport_name() const{
+std::string ATC::get_airport_name() const {
     return airport_name;
 }
 

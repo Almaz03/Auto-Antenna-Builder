@@ -18,7 +18,7 @@ std::string enters(std::string line) {
 }
 
 // Convert all characters in the input string to uppercase
-std::string lowercase(std::string line) {
+std::string fromlowtouppercase(std::string line) {
     for (int i = 0; i < line.size(); i++) {
         if (islower(line[i])) line[i] = toupper(line[i]);
     }

@@ -4,7 +4,7 @@
 #include <string>
 #include "classes.h"
 
-void exportDataToFile( std::vector<ATC> &atcs,  Settings &settings);
+void export_data_to_file( std::vector<ATC> &atcs,  Settings &settings);
 
 
 #endif //AUTOANTENNA_EXPORT_DATA_H

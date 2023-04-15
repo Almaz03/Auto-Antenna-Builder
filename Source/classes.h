@@ -11,6 +11,7 @@ private:
     struct Atc_values {
         int power;
         int ppm;
+        bool is_CTR;
     };
 
     struct Atc_positions {
@@ -42,6 +43,8 @@ public:
 
     void set_ppm(short del, short gnd, short twr, short app, short atis);
 
+    void set_is_CTR(bool del, bool gnd, bool twr, bool app, bool atis);
+
     short get_up_elevation() const;
 
     std::string get_FIR() const;
@@ -67,6 +70,16 @@ public:
     int get_app_power() const;
 
     int get_atis_power() const;
+
+    bool get_del_is_CTR() const;
+
+    bool get_gnd_is_CTR() const;
+
+    bool get_twr_is_CTR() const;
+
+    bool get_app_is_CTR() const;
+
+    bool get_atis_is_CTR() const;
 };
 
 class ATC {

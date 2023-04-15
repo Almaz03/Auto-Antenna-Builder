@@ -25,7 +25,7 @@ void fill_data_from_airac_file(std::vector<ATC> &atc, std::ifstream &airac_file)
                     // Устанавливаем название аэропорта, координаты и высоту над уровнем моря
                     atc[i].set_airport_name(elements[2]);
                     atc[i].set_coordinates(std::stod(elements[3]), std::stod(elements[4]));
-                    atc[i].set_elevation(std::stoi(elements[6]));
+                    atc[i].set_elevation(std::stoi(elements[5]));
                 }
             }
         }
@@ -33,7 +33,7 @@ void fill_data_from_airac_file(std::vector<ATC> &atc, std::ifstream &airac_file)
     airac_file.close(); // Close the file
 }
 
-void fill_atc_position_name_from_file(std::vector<ATC>& atc, std::ifstream& file) {
+void fill_atc_position_name_from_file(std::vector<ATC> &atc, std::ifstream &file) {
     std::string line;
     while (std::getline(file, line)) {
         if (line.size() > 4) { // Check if the line has at least 5 characters
