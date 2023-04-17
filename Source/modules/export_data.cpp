@@ -1,9 +1,10 @@
 #include <fstream>
 #include <algorithm>
 #include "../export_data.h"
+#include <iostream>
 
-void export_data_to_file(std::vector<ATC> &atcs, Settings &settings) {
-    std::vector<std::string> final_data;
+void export_data_to_file(std::vector<ATC> &atcs, Settings &settings, std::vector<std::string> &final_data) {
+
     const std::string country = settings.get_country();
     const std::string filename = "..//Output//" + country + ".csv"; // define the filename and path
     std::ofstream outfile(filename);
@@ -44,7 +45,7 @@ void export_data_to_file(std::vector<ATC> &atcs, Settings &settings) {
         // Write data for each ATC position
         for (const std::string &position_name: atc_position_name) {
             std::string position = position_name;
-            std::transform(position.begin(), position.end(), position.begin(), ::toupper);
+            //std::transform(position.begin(), position.end(), position.begin(), ::toupper);
 
             int power = 0;
             int ppm = 0;
@@ -52,55 +53,49 @@ void export_data_to_file(std::vector<ATC> &atcs, Settings &settings) {
             if (position.find("DEL") != std::string::npos) {
                 power = del_power;
                 ppm = del_ppm;
+                final_data.push_back(
+                        country + "-" + airport_name + "-AD-" + std::to_string(power) + "W," + country + "-" + icao
+                        + "-Delivery-Antenna-" + std::to_string(power) + "W," + std::to_string(latitude) + "," +
+                        std::to_string(longitude) + ","
+                        + std::to_string(elevation) + "," + std::to_string(power) + "," + std::to_string(ppm) + "," +
+                        icao + position + ",");
             } else if (position.find("GND") != std::string::npos) {
                 power = gnd_power;
                 ppm = gnd_ppm;
-            } else if (position.find("TWR") != std::string::npos) {
-                power = twr_power;
-                ppm = twr_ppm;
-            } else if (position.find("APP") != std::string::npos) {
-                power = app_power;
-                ppm = app_ppm;
-            } else if (position.find("ATIS") != std::string::npos) {
-                power = atis_power;
-                ppm = atis_ppm;
-            }
-            if (position.find("APP"))
-                final_data.push_back(
-                        country + "-" + airport_name + "-TMA-" + std::to_string(power) + "W," + country + "-" + icao
-                        + "-Approach-Antenna-" + std::to_string(power) + "W," + std::to_string(latitude) + "," +
-                        std::to_string(longitude) + ","
-                        + std::to_string(elevation) + "," + std::to_string(power) + "," + std::to_string(ppm) + "," +
-                        icao + position + ",");
-            else if (position.find("ATIS"))
-                final_data.push_back(
-                        country + "-" + airport_name + "-ATIS-" + std::to_string(power) + "W," + country + "-" + icao
-                        + "-ATIS-Antenna-" + std::to_string(power) + "W," + std::to_string(latitude) + "," +
-                        std::to_string(longitude) + ","
-                        + std::to_string(elevation) + "," + std::to_string(power) + "," + std::to_string(ppm) + "," +
-                        icao + position + ",");
-            else if (position.find("TWR-"))
-                final_data.push_back(
-                        country + "-" + airport_name + "-AD-" + std::to_string(power) + "W," + country + "-" + icao
-                        + "-Tower-Antenna-" + std::to_string(power) + "W," + std::to_string(latitude) + "," +
-                        std::to_string(longitude) + ","
-                        + std::to_string(elevation) + "," + std::to_string(power) + "," + std::to_string(ppm) + "," +
-                        icao + position + ",");
-            else if (position.find("GND"))
                 final_data.push_back(
                         country + "-" + airport_name + "-AD-" + std::to_string(power) + "W," + country + "-" + icao
                         + "-Ground-Antenna-" + std::to_string(power) + "W," + std::to_string(latitude) + "," +
                         std::to_string(longitude) + ","
                         + std::to_string(elevation) + "," + std::to_string(power) + "," + std::to_string(ppm) + "," +
                         icao + position + ",");
-            else if (position.find("DEL"))
+            } else if (position.find("TWR") != std::string::npos) {
+                power = twr_power;
+                ppm = twr_ppm;
                 final_data.push_back(
-                        country + "-" + airport_name + "-AD-" + std::to_string(power) + "W," + "," + country + "-" +
-                        icao
-                        + "-Delivery-Antenna-" + std::to_string(power) + "W," + std::to_string(latitude) + "," + "," +
+                        country + "-" + airport_name + "-AD-" + std::to_string(power) + "W," + country + "-" + icao
+                        + "-Tower-Antenna-" + std::to_string(power) + "W," + std::to_string(latitude) + "," +
                         std::to_string(longitude) + ","
                         + std::to_string(elevation) + "," + std::to_string(power) + "," + std::to_string(ppm) + "," +
                         icao + position + ",");
+            } else if (position.find("APP") != std::string::npos) {
+                power = app_power;
+                ppm = app_ppm;
+                final_data.push_back(
+                        country + "-" + airport_name + "-TMA-" + std::to_string(power) + "W," + country + "-" + icao
+                        + "-Approach-Antenna-" + std::to_string(power) + "W," + std::to_string(latitude) + "," +
+                        std::to_string(longitude) + ","
+                        + std::to_string(elevation) + "," + std::to_string(power) + "," + std::to_string(ppm) + "," +
+                        icao + position + ",");
+            } else if (position.find("ATIS") != std::string::npos) {
+                power = atis_power;
+                ppm = atis_ppm;
+                final_data.push_back(
+                        country + "-" + airport_name + "-ATIS-" + std::to_string(power) + "W," + country + "-" + icao
+                        + "-ATIS-Antenna-" + std::to_string(power) + "W," + std::to_string(latitude) + "," +
+                        std::to_string(longitude) + ","
+                        + std::to_string(elevation) + "," + std::to_string(power) + "," + std::to_string(ppm) + "," +
+                        icao + position + ",");
+            }
         }
     }
     for (std::string &data: final_data) {
